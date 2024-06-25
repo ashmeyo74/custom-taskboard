@@ -1,6 +1,3 @@
-//  Should import proper API script
-const uuidv4 = require("uuid/v4")
-
 // Retrieve tasks and nextId from localStorage, sets to an empty array otherwise
 let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
 let nextId = JSON.parse(localStorage.getItem("nextId"));
