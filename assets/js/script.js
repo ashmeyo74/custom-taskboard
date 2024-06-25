@@ -1,4 +1,5 @@
-const { uuid } = require('uuidv4');
+//  Should import proper API script
+import { v4 as uuidv4 } from 'uuidv4';
 
 // Retrieve tasks and nextId from localStorage, sets to an empty array otherwise
 let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
@@ -20,7 +21,7 @@ function generateTaskId() {
     taskList = taskList.map((task) => {
       // Using the uuidv4 API, generates a new ID for a task if the task in question doesn't have an ID.
       if (!task.id) {
-        task.id = $();
+        task.id = uuidv4();
         return task;
       }
     });
@@ -108,7 +109,7 @@ function handleAddTask(event) {
 
   // Generate a unique ID for the new task
   let newTask = {
-    id: uuidv4(),
+    id: uuid(),
     Title: title,
     Date: date,
     Description: description
