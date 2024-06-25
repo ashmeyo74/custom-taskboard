@@ -1,5 +1,5 @@
 //  Should import proper API script
-import { v4 as uuidv4 } from 'uuidv4';
+import uuid4 from 'https://cdn.jsdelivr.net/gh/tracker1/node-uuid4/browser.mjs';
 
 // Retrieve tasks and nextId from localStorage, sets to an empty array otherwise
 let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
@@ -21,7 +21,7 @@ function generateTaskId() {
     taskList = taskList.map((task) => {
       // Using the uuidv4 API, generates a new ID for a task if the task in question doesn't have an ID.
       if (!task.id) {
-        task.id = uuidv4();
+        task.id = uuid4();
         return task;
       }
     });
