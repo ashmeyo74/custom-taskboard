@@ -1,7 +1,6 @@
 // Retrieve tasks and nextId from localStorage, sets to an empty array otherwise
 let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
 let nextId = JSON.parse(localStorage.getItem("nextId"));
-
 const myModal = document.getElementById("myModal");
 const myInput = document.getElementById("modalContent");
 
@@ -11,21 +10,6 @@ let doneContainer = document.getElementById("done-cards");
 
 let addTaskButton = document.getElementById("addTaskBtn");
 let taskForm = document.querySelector("#taskForm");
-
-// Generates a task ID if the task on the taskList array doesn't have one.
-function generateTaskId() {
-  if (taskList != null) {
-    taskList = taskList.map((task) => {
-      // Using the uuidv4 API, generates a new ID for a task if the task in question doesn't have an ID.
-      if (!task.id) {
-        task.id = uuidv4();
-        return task;
-      }
-    });
-    // Save updated task list to local storage
-    localStorage.setItem("tasks", JSON.stringify(taskList));
-  }
-}
 
 // Creates card post dynamically by appending divs to their parent element in cascading order.
 function createTaskCard(task) {
@@ -99,14 +83,16 @@ function renderTaskList() {
 function handleAddTask(event) {
   event.preventDefault();
 
+  let task = JSON.parse(localStorage.getItem("tasks"));
+
   let title = document.getElementById("taskTitleInfo").value;
   let date = document.getElementById("taskDueDate").value;
   let description = document.getElementById("taskDescriptionArea").value;
-  let taskID = task.id;
+  let taskID = Date.now();
 
   // Generate a unique ID for the new task
-  let newTask = {
-    id: uuid(),
+  let taskList = {
+    id: taskID,
     Title: title,
     Date: date,
     Description: description
@@ -156,7 +142,6 @@ function handleDrop(event) {
 
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
 $(document).ready(function () {
-  generateTaskId(); // Ensure all tasks have unique IDs
   renderTaskList();
   taskForm.addEventListener("submit", handleAddTask);
 });
