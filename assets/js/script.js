@@ -1,37 +1,20 @@
-//  Should import proper API script
-const uuidv4 = require("uuid/v4")
-
 // Retrieve tasks and nextId from localStorage, sets to an empty array otherwise
 let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
-let nextId = JSON.parse(localStorage.getItem("nextId"));
-
-const myModal = document.getElementById("myModal");
-const myInput = document.getElementById("modalContent");
+const taskboardModal = document.getElementById("taskboardModal");
+const taskInput = document.getElementById("modalContent");
 
 let toDoContainer = document.getElementById("todo-cards");
 let inProgressContainer = document.getElementById("in-progress-cards");
 let doneContainer = document.getElementById("done-cards");
 
+let taskAddDiv = document.getElementById("submitBtnDiv");
 let addTaskButton = document.getElementById("addTaskBtn");
 let taskForm = document.querySelector("#taskForm");
 
-// Generates a task ID if the task on the taskList array doesn't have one.
-function generateTaskId() {
-  if (taskList != null) {
-    taskList = taskList.map((task) => {
-      // Using the uuidv4 API, generates a new ID for a task if the task in question doesn't have an ID.
-      if (!task.id) {
-        task.id = uuidv4();
-        return task;
-      }
-    });
-    // Save updated task list to local storage
-    localStorage.setItem("tasks", JSON.stringify(taskList));
-  }
-}
-
 // Creates card post dynamically by appending divs to their parent element in cascading order.
 function createTaskCard(task) {
+  console.log("Creating task card for task:", task); // Debugging output
+  
   // Configures dates
   const now = dayjs();
   const tomorrow = dayjs().add(1, "day");
@@ -105,19 +88,16 @@ function handleAddTask(event) {
   let title = document.getElementById("taskTitleInfo").value;
   let date = document.getElementById("taskDueDate").value;
   let description = document.getElementById("taskDescriptionArea").value;
-  let taskID = task.id;
+  let taskID = Date.now();
 
-  // Generate a unique ID for the new task
   let newTask = {
-    id: uuid(),
+    id: taskID,
     Title: title,
     Date: date,
     Description: description
   };
 
-  // Pushes task results to array
   taskList.push(newTask);
-
 
   // Converts taskList into a string and saves it to localStorage.
   localStorage.setItem("tasks", JSON.stringify(taskList));
@@ -138,17 +118,17 @@ dropTargets.forEach((target) => {
   target.addEventListener("drop", handleDrop);
 });
 
-// Todo: create a function to handle deleting a task
+// Handles task deletion
 function handleDeleteTask(event) {
   event.preventDefault();
   const taskId = event.target.dataset.taskId; // Get the task ID from the data attribute
-  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-  tasks = tasks.filter((task) => task.id !== taskId); // Filter out the task to delete
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+  taskList = taskList.filter((task) => task.id !== parseInt(taskId));
+  localStorage.setItem('tasks', JSON.stringify(taskList));
   renderTaskList();
 }
 
-// Todo: create a function to handle dropping a task into a new status lane
+
+// On set into new lane, saves text data  and appends to that lane
 function handleDrop(event) {
   event.preventDefault();
   const id = event.dataTransfer.getData("text/plain");
@@ -157,9 +137,8 @@ function handleDrop(event) {
   event.dataTransfer.clearData();
 }
 
-// Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
+// on page load, renders task list and listens for submit
 $(document).ready(function () {
-  generateTaskId(); // Ensure all tasks have unique IDs
   renderTaskList();
   taskForm.addEventListener("submit", handleAddTask);
 });

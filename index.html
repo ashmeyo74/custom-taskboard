@@ -25,10 +25,6 @@
 
     <link rel="stylesheet" href="./assets/css/style.css" />
 
-    <script type="module">
-      import { v4 as uuidv4 } from 'https://cdn.jsdelivr.net/npm/uuid@latest/dist/esm-browser/index.js';
-  </script>
-
     <title>Task Board</title>
   </head>
 
@@ -39,14 +35,14 @@
     </header>
     <div class="container">
       <div class="text-center mb-5">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#myModal">
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#taskboardModal">
           Add Task
         </button>
       </div>
     </div>
     
     <!-- Modal -->
-    <div id="myModal" class="modal fade" tabindex="-1">
+    <div id="taskboardModal" class="modal fade" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -72,8 +68,8 @@
                 <textarea class="form-control" id="taskDescriptionArea"rows="3"></textarea>
               </div>
 <br>
-              <div class="d-flex justify-content-center">
-                <input type="submit" class="btn btn-success " value="Add Task" id="addTaskBtn" data-bs-toggle="modal" data-bs-target="#myModal">
+              <div id="submitBtnDiv" class="d-flex justify-content-center">
+                <input type="submit" class="btn btn-success " value="Add Task" id="addTaskBtn" data-bs-toggle="modal" data-bs-target="#taskboardModal">
             </div> 
             </form>
 
@@ -84,7 +80,7 @@
 
       <div class="row swim-lanes text-center justify-content-between">
         <div class="col-12 col-lg-4 d-flex">
-          <div id="to-do" ondrop="handleDrop()" class="card border-light mb-3 lane flex-grow-1">
+          <div id="to-do" ondrop="handleDrop(event)" class="card border-light mb-3 lane flex-grow-1">
             <div class="card-header bg-white">
               <h2 class="card-title mb-1">To Do</h2>
             </div>
@@ -94,7 +90,7 @@
           </div>
         </div>
         <div class="col-12 col-lg-4 d-flex">
-          <div id="in-progress" ondrop="handleDrop()" class="card border-light mb-3 lane flex-grow-1">
+          <div id="in-progress" ondrop="handleDrop(event)" class="card border-light mb-3 lane flex-grow-1">
             <div class="card-header bg-white">
               <h2 class="card-title mb-1">In Progress</h2>
             </div>
@@ -104,7 +100,7 @@
           </div>
         </div>
         <div class="col-12 col-lg-4 d-flex">
-          <div id="done" ondrop="handleDrop()" class="card border-light mb-3 lane flex-grow-1">
+          <div id="done" ondrop="handleDrop(event)" class="card border-light mb-3 lane flex-grow-1">
             <div class="card-header bg-white">
               <h2 class="card-title mb-1">Done</h2>
             </div>
@@ -129,6 +125,6 @@
       crossorigin="anonymous"
     ></script>
 
-    <script type="module" src="./assets/js/script.js"></script>
+    <script src="./assets/js/script.js"></script>
   </body>
 </html>
