@@ -13,7 +13,7 @@ The deployed portfolio webpage can be accessed via Github Pages by following the
 
 Users can click 'Add Task' to input due date, task title and task description. Users can also move task between lanes and delete on click of the 'DELETE TASK' button.
 
-**Webpage Screenshot & Active Console:**
+**Webpage Screenshot:**
 ![Front Page displays a functioning code.](https://i.gyazo.com/dabdd883f1c5c47f64444aa9f80a721c.gif)
 ![Front Page displays a functioning code.](https://i.gyazo.com/0b7f4bc3db65d5652acede315e16c797.gif)
 
